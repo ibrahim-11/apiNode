@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  button(onclick='create()') create new teacher
+  button(onclick='createStudent()') create new student
+  div#display
+  script.
+
+   function create() {
+      let body = JSON.stringify({login:"example@mail.com", password:"azerty"})
+      let headers= {
+        'Content-Type': 'application/json',
+        'authorization': token
+
+      }
+      fetch("users/create",{method:'POST', body, headers}).then(res => res.text())
+          .then(
+            (result) => {
+              document.getElementById("display").innerText = result;
+            },
+          )
+    }
+
+     function create(){
+      const body = JSON.stringify({firstname:'bedu',lastname:'lorent'})
+      const headers = {'Content-Type':'application/json'}
+      fetch('/create',{method:'POST', body, headers}).then((resp)=>resp.text()).then(
+        (text) => {
+          document.getElementById('display').innerText = text;
+        }
+      )
+    }
+     function createStudent(){
+      const body = JSON.stringify({firstname:'habib',lastname:'marovic',Id_section:'1'})
+      const headers = {'Content-Type':'application/json'}
+      fetch('/create/student',{method:'POST', body, headers}).then((resp)=>resp.text()).then(
+        (text) => {
+          document.getElementById('display').innerText = text;
+        }
+      )
+    }
